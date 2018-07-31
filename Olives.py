@@ -13,15 +13,15 @@ db = SQLAlchemy(application)
 '''
 json marshaller (object <-> json)
 '''
-rumor = api.model('rumor', {
-    'name': fields.String(required=True, description='rumor title'),
-    'content': fields.String(required=True, description='rumor content'),
-})
+# pokemon = api.model('pokemon', {
+    # 'name': fields.String(required=True, description='rumor title'),
+    # 'content': fields.String(required=True, description='rumor content'),
+# })
 
-rumor_id = api.model('rumor_id', {
-    'id': fields.String(readOnly=True, description='unique identifier of a rumor'),
-    'name': fields.String(required=True, description='rumor name'),
-    'content': fields.String(required=True, description='rumor content'),
+pokemon_id = api.model('pokemon_id', {
+    'name': fields.String(readOnly=True, description='pokemon name'),
+    'type': fields.List(required=True, description='pokemon type'),
+    'stats': fields.List(required=True, description='pokemon stats')
 })
 
 
