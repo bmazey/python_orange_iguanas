@@ -15,7 +15,7 @@ json marshaller (object <-> json)
 '''
 pokemon = api.model('pokemon', {
     'name': fields.String(required=True, description='pokemon name'),
-    'stats': fields.String(required=True, description='pokemon stats'),
+    'type': fields.String(required=True, description='pokemon type'),
 })
 
 pokemon_type = api.model('pokemon_type', {
@@ -36,7 +36,7 @@ ignore warning as props will resolve at runtime
 
 
 class Pokemon(db.Model):
-    type = db.Column(db.String(80), unique=, nullable=False)
+    type = db.Column(db.String(80), primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     content = db.Column(db.String(120), unique=True, nullable=False)
 
@@ -44,14 +44,14 @@ class Pokemon(db.Model):
         return '<Pokemon %r>' % self.content
 
 
-# def create(data):
-    # id = str(uuid.uuid4())
-    # name = data.get('name')
-    # content = data.get('content')
-    # pokemon = Pokemon(id=id, name=name, content=content)
-    # db.session.add(pokemon)
-    # db.session.commit()
-    # return rumor
+def create(data):
+    type = str(uuid.uuid4())
+    name = data.get('name')
+    content = data.get('content')
+    pokemon = Pokemon(type=type, name=name, content=content)
+    db.session.add(pokemon)
+    db.session.commit()
+    return pokemon
 
 
 '''
@@ -59,7 +59,7 @@ API controllers
 '''
 
 
-@api.route("/pokemon")
+@api.route("/pokemon/<string:name>")
 class PokemonRoute(Resource):
     def get(self):
         return {'Pikachu': 'electric'}
@@ -73,6 +73,7 @@ class Pokemontype(Resource):
     def get(self, type):
         # use sqlalchemy to get a rumor by ID
         return Pokemon.query.filter(Pokemon.type == type)
+
 
 @api.route("/pokemon/health/<string:hp>")
 class PokemonHp(Resource):
