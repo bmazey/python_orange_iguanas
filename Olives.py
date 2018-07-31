@@ -1,45 +1,102 @@
-import logging.config
+import uuid
+from flask import Flask, request, jsonify
+from flask_restplus import Resource, Api
+from flask_restplus import fields
+from flask_sqlalchemy import SQLAlchemy
 
-import os
-from flask import Flask, Blueprint
-from rest_api_demo import settings
-from rest_api_demo.api.blog.endpoints.posts import ns as blog_posts_namespace
-from rest_api_demo.api.blog.endpoints.categories import ns as blog_categories_namespace
-from rest_api_demo.api.restplus import api
-from rest_api_demo.database import db
+# simple flask application definition
+application = Flask(__name__)
+api = Api(application)
+application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+db = SQLAlchemy(application)
 
-app = Flask(__name__)
-logging_conf_path = os.path.normpath(os.path.join(os.path.dirname(__file__), '../logging.conf'))
-logging.config.fileConfig(logging_conf_path)
-log = logging.getLogger(__name__)
+'''
+json marshaller (object <-> json)
+'''
+rumor = api.model('rumor', {
+    'name': fields.String(required=True, description='rumor title'),
+    'content': fields.String(required=True, description='rumor content'),
+})
 
-
-def configure_app(flask_app):
-    flask_app.config['SERVER_NAME'] = settings.FLASK_SERVER_NAME
-    flask_app.config['SQLALCHEMY_DATABASE_URI'] = settings.SQLALCHEMY_DATABASE_URI
-    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = settings.SQLALCHEMY_TRACK_MODIFICATIONS
-    flask_app.config['SWAGGER_UI_DOC_EXPANSION'] = settings.RESTPLUS_SWAGGER_UI_DOC_EXPANSION
-    flask_app.config['RESTPLUS_VALIDATE'] = settings.RESTPLUS_VALIDATE
-    flask_app.config['RESTPLUS_MASK_SWAGGER'] = settings.RESTPLUS_MASK_SWAGGER
-    flask_app.config['ERROR_404_HELP'] = settings.RESTPLUS_ERROR_404_HELP
+rumor_id = api.model('rumor_id', {
+    'id': fields.String(readOnly=True, description='unique identifier of a rumor'),
+    'name': fields.String(required=True, description='rumor name'),
+    'content': fields.String(required=True, description='rumor content'),
+})
 
 
-def initialize_app(flask_app):
-    configure_app(flask_app)
+'''
+Rumor object model (Rumor <-> rumor) 
+ignore warning as props will resolve at runtime
+'''
 
-    blueprint = Blueprint('api', __name__, url_prefix='/api')
-    api.init_app(blueprint)
-    api.add_namespace(blog_posts_namespace)
-    api.add_namespace(blog_categories_namespace)
-    flask_app.register_blueprint(blueprint)
 
-    db.init_app(flask_app)
+class Rumor(db.Model):
+    id = db.Column(db.Text(80), primary_key=True)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    content = db.Column(db.String(120), unique=True, nullable=False)
+
+    def __repr__(self):
+        return '<Rumor %r>' % self.content
+
+
+def create_rumor(data):
+    id = str(uuid.uuid4())
+    name = data.get('name')
+    content = data.get('content')
+    rumor = Rumor(id=id, name=name, content=content)
+    db.session.add(rumor)
+    db.session.commit()
+    return rumor
+
+
+'''
+API controllers
+'''
+
+
+@api.route("/rumor")
+class RumorRoute(Resource):
+    def get(self):
+        return {'brandon': 'listens to selena gomez'}
+
+    # @api.response(201, 'Rumor successfully created.')
+    @api.expect(rumor)
+    @api.marshal_with(rumor_id)
+    def post(self):
+        new_rumor = create_rumor(request.json)
+        return Rumor.query.filter(Rumor.id == new_rumor.id).one()
+
+
+# id is a url-encoded variable
+@api.route("/rumor/<string:id>")
+class RumorIdRoute(Resource):
+    @api.marshal_with(rumor_id)
+    # id becomes a method param in this GET
+    def get(self, id):
+        # use sqlalchemy to get a rumor by ID
+        return Rumor.query.filter(Rumor.id == id).one()
+
+
+'''
+helper methods (for testing and sqlalchemy configuration)
+'''
+
+
+def configure_db():
+    db.create_all()
+    db.session.commit()
+
+
+# for testing only!
+def get_app():
+    return application
 
 
 def main():
-    initialize_app(app)
-    log.info('>>>>> Starting development server at http://{}/api/ <<<<<'.format(app.config['SERVER_NAME']))
-    app.run(debug=settings.FLASK_DEBUG)
+    configure_db()
+    application.debug = True
+    application.run()
 
 
 if __name__ == "__main__":
