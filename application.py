@@ -24,7 +24,7 @@ class PokemonSpecialDefense(Resource):
     def get(self, special_defense):
         for values in data:
             if special_defense == values['special_defense']:
-                return data.get(values)
+                return data.get(special_defense)
 
 
 def main():
