@@ -19,6 +19,13 @@ class HelloWorld(Resource):            # Create a RESTful resource
         return data.get(pokemon)
 
 
+@api.route("/pokemon/<int:special_defence>")
+class PokemonSpecialDefense(Resource):
+    def get(self, special_defense):
+        for values in data:
+            if values == special_defense:
+                return data.get(special_defense)
+
 def main():
     application.debug = True
     application.run()
