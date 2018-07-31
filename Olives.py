@@ -19,9 +19,13 @@ pokemon = api.model('pokemon', {
 })
 
 pokemon_type = api.model('pokemon_type', {
-    'pokemon_type': fields.String(readOnly=True, description='unique identifier of a rumor'),
-    'name': fields.String(required=True, description='rumor name'),
-    'content': fields.String(required=True, description='rumor content'),
+    'type': fields.String(readOnly=True, description='unique identifier of a pokemon'),
+    'name': fields.String(required=True, description='pokemon name'),
+})
+
+pokemon_health = api.model('pokemon_health', {
+    'health': fields.String(readOnly=True, description='unique identifier of a pokemon'),
+    'name': fields.String(required=True, description='pokemon name')
 })
 
 
@@ -56,7 +60,7 @@ API controllers
 
 
 @api.route("/pokemon")
-class Pokemon(Resource):
+class PokemonRoute(Resource):
     def get(self):
         return {'Pikachu': 'electric'}
 
@@ -69,6 +73,14 @@ class Pokemontype(Resource):
     def get(self, type):
         # use sqlalchemy to get a rumor by ID
         return Pokemon.query.filter(Pokemon.type == type)
+
+@api.route("/pokemon/<string:hp>")
+class PokemonHp(Resource):
+    @api.marshal_with(pokemon_health)
+    # id becomes a method param in this GET
+    def get(self, hp):
+        # use sqlalchemy to get a rumor by ID
+        return Pokemon.query.filter(Pokemon.hp == hp)
 
 
 '''
