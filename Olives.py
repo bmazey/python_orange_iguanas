@@ -13,16 +13,17 @@ db = SQLAlchemy(application)
 '''
 json marshaller (object <-> json)
 '''
+
 # pokemon = api.model('pokemon', {
     # 'name': fields.String(required=True, description='rumor title'),
     # 'content': fields.String(required=True, description='rumor content'),
 # })
 
-pokemon_id = api.model('pokemon_id', {
-    'name': fields.String(readOnly=True, description='pokemon name'),
-    'type': fields.List(required=True, description='pokemon type'),
-    'stats': fields.List(required=True, description='pokemon stats')
-})
+# pokemon_id = api.model('pokemon_id', {
+    # 'name': fields.String(readOnly=True, description='pokemon name'),
+    # 'type': fields.List(required=True, description='pokemon type'),
+    # 'stats': fields.List(required=True, description='pokemon stats')
+# })
 
 
 '''
@@ -31,23 +32,23 @@ ignore warning as props will resolve at runtime
 '''
 
 
-class Rumor(db.Model):
-    id = db.Column(db.Text(80), primary_key=True)
+class Pokemon(db.Model):
+    type = db.Column(db.Text(80), primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=False)
     content = db.Column(db.String(120), unique=True, nullable=False)
 
     def __repr__(self):
-        return '<Rumor %r>' % self.content
+        return '<Pokemon %r>' % self.content
 
 
-def create_rumor(data):
-    id = str(uuid.uuid4())
-    name = data.get('name')
-    content = data.get('content')
-    rumor = Rumor(id=id, name=name, content=content)
-    db.session.add(rumor)
-    db.session.commit()
-    return rumor
+# def create(data):
+    # id = str(uuid.uuid4())
+    # name = data.get('name')
+    # content = data.get('content')
+    # pokemon = Pokemon(id=id, name=name, content=content)
+    # db.session.add(pokemon)
+    # db.session.commit()
+    # return rumor
 
 
 '''
@@ -55,27 +56,21 @@ API controllers
 '''
 
 
-@api.route("/rumor")
-class RumorRoute(Resource):
+@api.route("/pokemon")
+class Pokemon(Resource):
     def get(self):
-        return {'brandon': 'listens to selena gomez'}
+        return {
 
-    # @api.response(201, 'Rumor successfully created.')
-    @api.expect(rumor)
-    @api.marshal_with(rumor_id)
-    def post(self):
-        new_rumor = create_rumor(request.json)
-        return Rumor.query.filter(Rumor.id == new_rumor.id).one()
+        }
 
-
-# id is a url-encoded variable
-@api.route("/rumor/<string:id>")
-class RumorIdRoute(Resource):
-    @api.marshal_with(rumor_id)
-    # id becomes a method param in this GET
-    def get(self, id):
-        # use sqlalchemy to get a rumor by ID
-        return Rumor.query.filter(Rumor.id == id).one()
+# # id is a url-encoded variable
+# @api.route("/pokemon/<string:type>")
+# class Pokemontype(Resource):
+#     @api.marshal_with(pokemon_type)
+#     # id becomes a method param in this GET
+#     def get(self, type):
+#         # use sqlalchemy to get a rumor by ID
+#         return Pokemon.query.filter(Pokemon.type == type).one()
 
 
 '''
