@@ -23,8 +23,8 @@ class HelloWorld(Resource):            # Create a RESTful resource
 class HelloMars(Resource):
     def get(self):
         for x in data:
-            if (x["types"])
-        return
+            if x == ["types"]:
+                return data.get(x)
 
 
 def main():
