@@ -11,8 +11,6 @@ application = Flask(__name__)
 api = Api(application)
 with open('pokemon.json') as json_file:
     data = json.load(json_file)
-for x in data:
-    print(x["types"])
 
 
 @api.route("/pokemon/<string:pokemon>")                   # Create a URL route to this resource
@@ -24,7 +22,9 @@ class HelloWorld(Resource):            # Create a RESTful resource
 @api.route("/type/<string:type>")
 class HelloMars(Resource):
     def get(self):
-        return y
+        for x in data:
+            if (x["types"])
+        return
 
 
 def main():
