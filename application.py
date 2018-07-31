@@ -21,10 +21,11 @@ class HelloWorld(Resource):            # Create a RESTful resource
 
 @api.route("/type/<string:types>")
 class HelloMars(Resource):
-     def get(self, pokemon):
+     def get(self, pokemon, types):
         pokemons = data.get(pokemon)
         for x in pokemons:
-            if x == "types":
+            if "types" in pokemons:
+                moon =
                 return pokemons["types"]
 
 
