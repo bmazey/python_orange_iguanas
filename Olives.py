@@ -68,7 +68,7 @@ class Pokemontype(Resource):
     # id becomes a method param in this GET
     def get(self, type):
         # use sqlalchemy to get a rumor by ID
-        return Pokemon.query.filter(Pokemon.type == type).one()
+        return Pokemon.query.filter(Pokemon.type == type)
 
 
 '''
