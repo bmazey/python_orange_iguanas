@@ -15,7 +15,7 @@ json marshaller (object <-> json)
 '''
 pokemon = api.model('pokemon', {
     'name': fields.String(required=True, description='pokemon name'),
-    'content': fields.String(required=True, description='pokemon content'),
+    'stats': fields.String(required=True, description='pokemon stats'),
 })
 
 pokemon_type = api.model('pokemon_type', {
@@ -74,7 +74,7 @@ class Pokemontype(Resource):
         # use sqlalchemy to get a rumor by ID
         return Pokemon.query.filter(Pokemon.type == type)
 
-@api.route("/pokemon/<string:hp>")
+@api.route("/pokemon/health/<string:hp>")
 class PokemonHp(Resource):
     @api.marshal_with(pokemon_health)
     # id becomes a method param in this GET
