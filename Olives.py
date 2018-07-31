@@ -36,8 +36,8 @@ ignore warning as props will resolve at runtime
 
 
 class Pokemon(db.Model):
-    type = db.Column(db.Text(80), primary_key=True)
-    name = db.Column(db.String(80), unique=False, nullable=False)
+    type = db.Column(db.String(80), unique=, nullable=False)
+    name = db.Column(db.String(80), unique=True, nullable=False)
     content = db.Column(db.String(120), unique=True, nullable=False)
 
     def __repr__(self):
