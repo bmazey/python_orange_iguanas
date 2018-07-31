@@ -13,7 +13,7 @@ db = SQLAlchemy(application)
 '''
 json marshaller (object <-> json)
 '''
-pokemon = api.model('pokemon', {
+rumor = api.model('rumor', {
     'name': fields.String(required=True, description='rumor title'),
     'content': fields.String(required=True, description='rumor content'),
 })
