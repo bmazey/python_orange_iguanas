@@ -23,7 +23,7 @@ class HelloWorld(Resource):                               # Create a RESTful res
 class PokemonSpecialDefense(Resource):
     def get(self, special_defense):
         for values in data:
-            if special_defense == data['special_defense']:
+            if special_defense == values['special_defense']:
                 return data.get(values)
 
 
