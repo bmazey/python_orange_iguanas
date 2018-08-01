@@ -3,14 +3,16 @@ import json
 from flask import Flask, Response
 from flask_restplus import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
-from flask_restplus import fields
+
 
 
 # welcome to flask: http://flask.pocoo.org/
 # working with sqlalchemy & swagger:
 # http://michal.karzynski.pl/blog/2016/06/19/building-beautiful-restful-apis-using-flask-swagger-ui-flask-restplus/
 # hello world2
+
 application = Flask(__name__)
+application.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 api = Api(application)
 with open('pokemon.json') as json_file:
     data = json.load(json_file)
@@ -23,6 +25,7 @@ class Pokemon(Resource):                                  # Create a RESTful res
     def get(self, pokemon):                               # Create GET endpoint
         return data.get(pokemon)
 
+# print(Pokemon().get(pokemon="Pikachu"))
 
 @api.route("/pokemon/types/<string:types>/<string:types2>")
 class Pokemon2Types(Resource):
@@ -41,7 +44,7 @@ class Pokemon2Types(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
-# print(PokemonTypes().get(types="grass", types2="ice"))
+# print(Pokemon2Types().get(types="grass", types2="ice"))
 
 @api.route("/pokemon/types/<string:types>")
 class PokemonTypes(Resource):
@@ -162,6 +165,10 @@ class PokemonSpeed(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
+def get_app():
+    return application
+
+''''
 def main():
     application.debug = True
     application.run()
@@ -169,4 +176,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
+'''
