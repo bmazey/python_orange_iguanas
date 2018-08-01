@@ -19,10 +19,29 @@ db = SQLAlchemy(application)
 
 
 @api.route("/pokemon/<string:pokemon>")                   # Create a URL route to this resource
-class Pokemon(Resource):                               # Create a RESTful resource
+class Pokemon(Resource):                                  # Create a RESTful resource
     def get(self, pokemon):                               # Create GET endpoint
         return data.get(pokemon)
 
+
+@api.route("/pokemon/types/<string:types>/<string:types2>")
+class Pokemon2Types(Resource):
+    def get(self, types, types2):
+        pokemon_names = ''
+        for name in data:
+            if [types, types2] or [types2, types] == data[name]["types"]:
+                pokemon_names += name
+                pokemon_names += ' '
+
+        pokemon_dict = {}
+        for names in pokemon_names.split():
+            pokemon_dict.update({names: data.get(names)})
+
+        json_format = json.dumps(pokemon_dict)
+        return Response(response=json_format, mimetype="application/json", status=200)
+
+
+# print(PokemonTypes().get(types="grass", types2="ice"))
 
 @api.route("/pokemon/types/<string:types>")
 class PokemonTypes(Resource):
