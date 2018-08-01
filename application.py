@@ -24,7 +24,7 @@ class Pokemon(Resource):                                  # Create a RESTful res
     def get(self, pokemon):                               # Create GET endpoint
         return data.get(pokemon)
 
-
+# find all pokemon of a certain type
 @api.route("/pokemon/types/<string:types>")
 class PokemonTypes(Resource):
     def get(self, types):
@@ -34,6 +34,7 @@ class PokemonTypes(Resource):
                 pokemon_names += name
                 pokemon_names += ' '
 
+        # converts to json
         pokemon_dict = {}
         for names in pokemon_names.split():
             pokemon_dict.update({names: data.get(names)})
@@ -42,6 +43,7 @@ class PokemonTypes(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
+# find all pokemon of a certain health
 @api.route("/pokemon/stats/hp/<int:hp>")
 class PokemonHP(Resource):
     def get(self, hp):
@@ -59,6 +61,7 @@ class PokemonHP(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
+# find all pokemon of a certain attack value
 @api.route("/pokemon/stats/attack/<int:attack>")
 class PokemonAttack(Resource):
     def get(self, attack):
@@ -76,6 +79,7 @@ class PokemonAttack(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
+# find all pokemon of a certain defense value
 @api.route("/pokemon/stats/defense/<int:defense>")
 class PokemonDefense(Resource):
     def get(self, defense):
@@ -92,7 +96,7 @@ class PokemonDefense(Resource):
         json_format = json.dumps(pokemon_dict)
         return Response(response=json_format, mimetype="application/json", status=200)
 
-
+# find all pokemon of a certain special attack value
 @api.route("/pokemon/stats/special_attack/<int:special_attack>")
 class PokemonSpecialAttack(Resource):
     def get(self, special_attack):
@@ -110,6 +114,7 @@ class PokemonSpecialAttack(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
+# find all pokemon of a certain special defense value
 @api.route("/pokemon/stats/special_defense/<int:special_defense>")
 class PokemonSpecialDefense(Resource):
     def get(self, special_defense):
@@ -127,6 +132,7 @@ class PokemonSpecialDefense(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
+# find all pokemon of a certain speed value
 @api.route("/pokemon/stats/speed/<int:speed>")
 class PokemonSpeed(Resource):
     def get(self, speed):
