@@ -20,7 +20,7 @@ class HelloWorld(Resource):            # Create a RESTful resource
         return data.get(pokemon)
 
 
-@api.route("/pokemon/type/<string:types>")
+@api.route("/pokemon/types/<string:types>")
 class PokemonType(Resource):
     def get(self, types):
         pokemon_names = ''
