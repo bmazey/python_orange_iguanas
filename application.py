@@ -1,6 +1,7 @@
 import json
 from flask import Flask
 from flask_restplus import Resource, Api
+import array
 
 
 # welcome to flask: http://flask.pocoo.org/
@@ -27,12 +28,12 @@ class PokemonType(Resource):
             if types == data[name]["types"]:
                 pokemon_names += name
                 pokemon_names += ' '
-        return json.dumps(pokemon_names.split())
+        return pokemon_names()
 
 
 print(PokemonType().get(types=["grass"]))
 
-#
+
 # def main():
 #     application.debug = True
 #     application.run()
