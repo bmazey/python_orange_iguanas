@@ -1,6 +1,6 @@
 import json
 from flask import Flask
-from flask_restplus import Resource, Api, fields
+from flask_restplus import Resource, Api
 
 
 # welcome to flask: http://flask.pocoo.org/
@@ -21,11 +21,10 @@ class HelloWorld(Resource):            # Create a RESTful resource
 
 @api.route("/type/<string:types>")
 class HelloMars(Resource):
-     def get(self, pokemon):
-        pokemons_stats = data.get(pokemon)
-        if "types" in data.get(pokemons_stats):
-            types = pokemons_stats["types"]
-            return types
+    def get(self, types):
+        for k, v in data.items:
+            if v == "types":
+                return k(types)
 
 
 def main():
