@@ -2,7 +2,6 @@ import json
 from flask import Flask, Response
 from flask_restplus import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
-from flask_restplus import fields
 
 
 # welcome to flask: http://flask.pocoo.org/
