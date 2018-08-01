@@ -1,5 +1,5 @@
 import json
-from flask import Flask
+from flask import Flask, Response
 from flask_restplus import Resource, Api
 
 
@@ -19,7 +19,7 @@ class Pokemon(Resource):                               # Create a RESTful resour
         return data.get(pokemon)
 
 
-@api.route("/pokemon/special_defense/<int:special_defence>")
+@api.route("/pokemon/special_defense/<int:special_defense>")
 class PokemonSpecialDefense(Resource):
     def get(self, special_defense):
         pokemon_names = ''
@@ -27,16 +27,18 @@ class PokemonSpecialDefense(Resource):
             if special_defense == data[name]["stats"]["special_defense"]:
                 pokemon_names += name
                 pokemon_names += ' '
-        return pokemon_names.split()
+
+        pokemon_dict = {}
+        for names in pokemon_names.split():
+            pokemon_dict.update({names: data.get(names)})
+
+        json_format = json.dumps(pokemon_dict)
+        return Response(response=json_format, mimetype="application/json", status=200)
 
 
-print(PokemonSpecialDefense().get(special_defense=60))
+# print(PokemonSpecialDefense().get(special_defense=60))
 
 
-
-# print(data["Pikachu"])
-
-'''
 def main():
     application.debug = True
     application.run()
@@ -44,4 +46,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-'''
