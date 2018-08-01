@@ -29,7 +29,7 @@ class PokemonTypes(Resource):
     def get(self, types):
         pokemon_names = ''
         for name in data:
-            if types == data[name]["types"]:
+            if [types] == data[name]["types"]:
                 pokemon_names += name
                 pokemon_names += ' '
 
