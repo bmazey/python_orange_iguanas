@@ -36,9 +36,27 @@ class PokemonSpecialDefense(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
-# print(PokemonSpecialDefense().get(special_defense=60))
+@api.route("/pokemon/attacks/<int:attacks>")
+class PokemonAttacks(Response):
+    def get(self, attacks):
+        pokemon_names = ''
+        for name in data:
+            if attacks == data[name]["stats"]["attacks"]:
+                pokemon_names += name
+                pokemon_names += ' '
 
+'''
+        pokemon_dict = {}
+        for names in pokemon_names.split():
+            pokemon_dict.update({names: data.get(names)})
 
+        json_format = json.dumps(pokemon_dict)
+        return Response(response=json_format, mimetype="application/json", status=200)
+'''
+
+print(PokemonAttacks().get(attacks=60))
+
+'''
 def main():
     application.debug = True
     application.run()
@@ -46,3 +64,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+'''
