@@ -16,12 +16,14 @@ application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 db = SQLAlchemy(application)
 
 
+# find pokemon data from their name
 @api.route("/pokemon/<string:pokemon>")                   # Create a URL route to this resource
 class Pokemon(Resource):                                  # Create a RESTful resource
     def get(self, pokemon):                               # Create GET endpoint
         return data.get(pokemon)
 
 
+# find pokemon who have multiple types
 @api.route("/pokemon/types/<string:types>/<string:types2>")
 class Pokemon2Types(Resource):
     def get(self, types, types2):
@@ -34,13 +36,12 @@ class Pokemon2Types(Resource):
         pokemon_dict = {}
         for names in pokemon_names.split():
             pokemon_dict.update({names: data.get(names)})
-
+        # converts to json format
         json_format = json.dumps(pokemon_dict)
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
-# print(PokemonTypes().get(types="grass", types2="ice"))
-
+# find pokemon from a certain type
 @api.route("/pokemon/types/<string:types>")
 class PokemonTypes(Resource):
     def get(self, types):
@@ -58,6 +59,7 @@ class PokemonTypes(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
+# find pokemon from a certain health value
 @api.route("/pokemon/stats/hp/<int:hp>")
 class PokemonHP(Resource):
     def get(self, hp):
@@ -75,6 +77,7 @@ class PokemonHP(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
+# find pokemon from a certain attack value
 @api.route("/pokemon/stats/attack/<int:attack>")
 class PokemonAttack(Resource):
     def get(self, attack):
@@ -92,6 +95,7 @@ class PokemonAttack(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
+# find pokemon from a certain defense value
 @api.route("/pokemon/stats/defense/<int:defense>")
 class PokemonDefense(Resource):
     def get(self, defense):
@@ -108,7 +112,7 @@ class PokemonDefense(Resource):
         json_format = json.dumps(pokemon_dict)
         return Response(response=json_format, mimetype="application/json", status=200)
 
-
+# find pokemon from a certain special attack value
 @api.route("/pokemon/stats/special_attack/<int:special_attack>")
 class PokemonSpecialAttack(Resource):
     def get(self, special_attack):
@@ -126,6 +130,7 @@ class PokemonSpecialAttack(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
+# find pokemon from a certain special defense value
 @api.route("/pokemon/stats/special_defense/<int:special_defense>")
 class PokemonSpecialDefense(Resource):
     def get(self, special_defense):
@@ -143,6 +148,7 @@ class PokemonSpecialDefense(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
+# find pokemon from a certain speed value
 @api.route("/pokemon/stats/speed/<int:speed>")
 class PokemonSpeed(Resource):
     def get(self, speed):
