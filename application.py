@@ -95,6 +95,7 @@ class PokemonDefense(Resource):
         json_format = json.dumps(pokemon_dict)
         return Response(response=json_format, mimetype="application/json", status=200)
 
+
 # find all pokemon of a certain special attack value
 @api.route("/pokemon/stats/special_attack/<int:special_attack>")
 class PokemonSpecialAttack(Resource):
@@ -204,12 +205,48 @@ class PokemonSpecialAttack(Resource):
 
 
 # find all pokemon having greater than a certain health
-@api.route("/pokemon/stats/greater//hp/<int:hp>")
+@api.route("/pokemon/stats/greater/hp/<int:hp>")
 class PokemonHP(Resource):
     def get(self, hp):
         pokemon_names = ''
         for name in data:
             if hp <= data[name]["stats"]["hp"]:
+                pokemon_names += name
+                pokemon_names += ' '
+
+        pokemon_dict = {}
+        for names in pokemon_names.split():
+            pokemon_dict.update({names: data.get(names)})
+
+        json_format = json.dumps(pokemon_dict)
+        return Response(response=json_format, mimetype="application/json", status=200)
+
+
+# find all pokemon having greater than a certain defense value
+@api.route("/pokemon/stats/greater/defense/<int:defense>")
+class PokemonDefense(Resource):
+    def get(self, defense):
+        pokemon_names = ''
+        for name in data:
+            if defense <= data[name]["stats"]["defense"]:
+                pokemon_names += name
+                pokemon_names += ' '
+
+        pokemon_dict = {}
+        for names in pokemon_names.split():
+            pokemon_dict.update({names: data.get(names)})
+
+        json_format = json.dumps(pokemon_dict)
+        return Response(response=json_format, mimetype="application/json", status=200)
+
+
+# find all pokemon having greater than a certain attack value
+@api.route("/pokemon/stats/greater/attack/<int:attack>")
+class PokemonAttack(Resource):
+    def get(self, attack):
+        pokemon_names = ''
+        for name in data:
+            if attack <= data[name]["stats"]["attack"]:
                 pokemon_names += name
                 pokemon_names += ' '
 
