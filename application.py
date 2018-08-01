@@ -7,7 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 # welcome to flask: http://flask.pocoo.org/
 # working with sqlalchemy & swagger:
 # http://michal.karzynski.pl/blog/2016/06/19/building-beautiful-restful-apis-using-flask-swagger-ui-flask-restplus/
-# hello world2
+
 application = Flask(__name__)
 api = Api(application)
 with open('pokemon.json') as json_file:
