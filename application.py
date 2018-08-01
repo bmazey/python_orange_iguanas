@@ -2,7 +2,6 @@
 import json
 from flask import Flask, Response
 from flask_restplus import Resource, Api
-from flask_sqlalchemy import SQLAlchemy
 
 
 # welcome to flask: http://flask.pocoo.org/
@@ -13,13 +12,11 @@ application = Flask(__name__)
 api = Api(application)
 with open('pokemon.json') as json_file:
     data = json.load(json_file)
-application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
-db = SQLAlchemy(application)
 
 
-@api.route("/pokemon/<string:pokemon>")                   # Create a URL route to this resource
-class Pokemon(Resource):                               # Create a RESTful resource
-    def get(self, pokemon):                               # Create GET endpoint
+@api.route("/pokemon/<string:pokemon>")                     # Create a URL route to this resource
+class Pokemon(Resource):                                    # Create a RESTful resource
+    def get(self, pokemon):                                 # Create GET endpoint
         return data.get(pokemon)
 
 
@@ -28,7 +25,7 @@ class PokemonTypes(Resource):
     def get(self, types):
         pokemon_names = ''
         for name in data:
-            if types == data[name]["types"]:
+            if [types] == data[name]['types']:
                 pokemon_names += name
                 pokemon_names += ' '
 
