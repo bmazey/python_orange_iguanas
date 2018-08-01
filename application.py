@@ -14,19 +14,29 @@ with open('pokemon.json') as json_file:
 
 
 @api.route("/pokemon/<string:pokemon>")                   # Create a URL route to this resource
-class HelloWorld(Resource):                               # Create a RESTful resource
+class Pokemon(Resource):                               # Create a RESTful resource
     def get(self, pokemon):                               # Create GET endpoint
         return data.get(pokemon)
 
 
-@api.route("/pokemon/<int:special_defence>")
+@api.route("/pokemon/special_defense/<int:special_defence>")
 class PokemonSpecialDefense(Resource):
     def get(self, special_defense):
-        for values in data:
-            if special_defense == values['special_defense']:
-                return data.get(special_defense)
+        pokemon_names = ''
+        for name in data:
+            if special_defense == data[name]["stats"]["special_defense"]:
+                pokemon_names += name
+                pokemon_names += ' '
+        return pokemon_names.split()
 
 
+print(PokemonSpecialDefense().get(special_defense=60))
+
+
+
+# print(data["Pikachu"])
+
+'''
 def main():
     application.debug = True
     application.run()
@@ -34,3 +44,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+'''
