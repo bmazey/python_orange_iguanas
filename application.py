@@ -168,19 +168,3 @@ class PokemonSpeed(Resource):
 # if __name__ == "__main__":
 #     main()
 
-url = "https://na.op.gg/summoner/ajax/renew.json/"
-
-payload = {
-    'summonerId': 47220368,
-}
-
-data = json.dumps(payload)
-
-print(data)
-
-r = requests.post(url, data)
-
-print(r)
-print(r.status_code)
-print(r.text)
-
