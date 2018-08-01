@@ -25,7 +25,7 @@ class Pokemon(Resource):                                  # Create a RESTful res
     def get(self, pokemon):                               # Create GET endpoint
         return data.get(pokemon)
 
-# print(Pokemon().get(pokemon="Pikachu"))
+print(Pokemon().get(pokemon="Pikachu"))
 
 @api.route("/pokemon/types/<string:types>/<string:types2>")
 class Pokemon2Types(Resource):
