@@ -159,12 +159,12 @@ class PokemonSpeed(Resource):
         json_format = json.dumps(pokemon_dict)
         return Response(response=json_format, mimetype="application/json", status=200)
 
-#
-# def main():
-#     application.debug = True
-#     application.run()
-#
-#
-# if __name__ == "__main__":
-#     main()
+
+def main():
+    application.debug = True
+    application.run()
+
+
+if __name__ == "__main__":
+    main()
 
