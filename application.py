@@ -170,6 +170,10 @@ class PokemonSpeed(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
+def get_app():
+    return application
+
+
 def main():
     application.debug = True
     application.run()
