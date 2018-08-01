@@ -28,7 +28,13 @@ class PokemonType(Resource):
             if types == data[name]["types"]:
                 pokemon_names += name
                 pokemon_names += ' '
-        return pokemon_names()
+
+                pokemon_dict = {}
+                for names in pokemon_names.split():
+                    pokemon_dict.update({names: data.get(names)})
+
+                json_format = json.dumps(pokemon_dict)
+                return Response(response=json_format, mimetype="application/json", status=200)
 
 
 print(PokemonType().get(types=["grass"]))
