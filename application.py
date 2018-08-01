@@ -165,6 +165,10 @@ def main():
     application.run()
 
 
+def get_app():
+    return application
+
+
 if __name__ == "__main__":
     main()
 
