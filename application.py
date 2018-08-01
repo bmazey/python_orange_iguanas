@@ -20,7 +20,7 @@ class HelloWorld(Resource):            # Create a RESTful resource
 
 
 @api.route("/type/<string:types>")
-class HelloMars(Resource):
+class PokemonType(Resource):
     def get(self, types):
         pokemon_names = ''
         for name in data:
@@ -30,10 +30,13 @@ class HelloMars(Resource):
         return pokemon_names.split()
 
 
-def main():
-    application.debug = True
-    application.run()
+print(PokemonType().get(types="grass"))
 
 
-if __name__ == "__main__":
-    main()
+# def main():
+#     application.debug = True
+#     application.run()
+#
+#
+# if __name__ == "__main__":
+#     main()
