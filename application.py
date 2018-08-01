@@ -29,21 +29,21 @@ class PokemonType(Resource):
                 pokemon_names += name
                 pokemon_names += ' '
 
-                pokemon_dict = {}
-                for names in pokemon_names.split():
-                    pokemon_dict.update({names: data.get(names)})
+        pokemon_dict = {}
+        for names in pokemon_names.split():
+                pokemon_dict.update({names: data.get(names)})
 
-                json_format = json.dumps(pokemon_dict)
-                return Response(response=json_format, mimetype="application/json", status=200)
-
-
-print(PokemonType().get(types=["grass"]))
+        json_format = json.dumps(pokemon_dict)
+        return Response(response=json_format, mimetype="application/json", status=200)
 
 
-# def main():
-#     application.debug = True
-#     application.run()
-#
-#
-# if __name__ == "__main__":
-#     main()
+# print(PokemonType().get(types=["grass"]))
+
+
+def main():
+    application.debug = True
+    application.run()
+
+
+if __name__ == "__main__":
+    main()
