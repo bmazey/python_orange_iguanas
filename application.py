@@ -149,7 +149,7 @@ class PokemonSpeed(Resource):
         return Response(response=json_format, mimetype="application/json", status=200)
 
 
-# find all pokemon of a certain speed value
+# find all pokemon having greater than a certain speed value
 @api.route("/pokemon/stats/greater/speed/<int:speed>")
 class PokemonSpeed(Resource):
     def get(self, speed):
@@ -165,6 +165,62 @@ class PokemonSpeed(Resource):
 
         json_format = json.dumps(pokemon_dict)
         return Response(response=json_format, mimetype="application/json", status=200)
+
+
+# find all pokemon having greater than a certain special defense value
+@api.route("/pokemon/stats/greater/special_defense/<int:special_defense>")
+class PokemonSpecialDefense(Resource):
+    def get(self, special_defense):
+        pokemon_names = ''
+        for name in data:
+            if special_defense <= data[name]["stats"]["special_defense"]:
+                pokemon_names += name
+                pokemon_names += ' '
+
+        pokemon_dict = {}
+        for names in pokemon_names.split():
+            pokemon_dict.update({names: data.get(names)})
+
+        json_format = json.dumps(pokemon_dict)
+        return Response(response=json_format, mimetype="application/json", status=200)
+
+
+# find all pokemon having greater than certain special attack value
+@api.route("/pokemon/stats/greater/special_attack/<int:special_attack>")
+class PokemonSpecialAttack(Resource):
+    def get(self, special_attack):
+        pokemon_names = ''
+        for name in data:
+            if special_attack <= data[name]["stats"]["special_attack"]:
+                pokemon_names += name
+                pokemon_names += ' '
+
+        pokemon_dict = {}
+        for names in pokemon_names.split():
+            pokemon_dict.update({names: data.get(names)})
+
+        json_format = json.dumps(pokemon_dict)
+        return Response(response=json_format, mimetype="application/json", status=200)
+
+
+# find all pokemon having greater than a certain health
+@api.route("/pokemon/stats/greater//hp/<int:hp>")
+class PokemonHP(Resource):
+    def get(self, hp):
+        pokemon_names = ''
+        for name in data:
+            if hp <= data[name]["stats"]["hp"]:
+                pokemon_names += name
+                pokemon_names += ' '
+
+        pokemon_dict = {}
+        for names in pokemon_names.split():
+            pokemon_dict.update({names: data.get(names)})
+
+        json_format = json.dumps(pokemon_dict)
+        return Response(response=json_format, mimetype="application/json", status=200)
+
+
 
 
 
