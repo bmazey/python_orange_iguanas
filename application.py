@@ -17,24 +17,6 @@ with open('pokemon.json') as json_file:
 application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 db = SQLAlchemy(application)
 
-# pokemonhp = api.model('HP', {
-# #     'pokemon': fields.String(required=True, description='Pokemon Name')
-# # })
-
-
-# @api.route("/pokemon/<string:pokemon>")                     # Create a URL route to this resource
-# class HelloWorld(Resource):                                 # Create a RESTful resource
-#     def get(self, pokemon):                                 # Create GET endpoint
-#         return data.get(pokemon)
-#
-#
-# @api.route("/pokemon/hp/<int:hp>")
-# class hp(Resource):
-#     def get(self, pokemon, stats, hp):
-#         for key in data:
-#             if data.get(pokemon.get(stats.get(hp))) == self:
-#                 return key
-#
 @api.route("/pokemon/<string:pokemon>")                   # Create a URL route to this resource
 class Pokemon(Resource):                               # Create a RESTful resource
     def get(self, pokemon):                               # Create GET endpoint
@@ -141,10 +123,6 @@ class PokemonSpeed(Resource):
 
         json_format = json.dumps(pokemon_dict)
         return Response(response=json_format, mimetype="application/json", status=200)
-
-
-
-# print(PokemonSpecialDefense().get(special_defense=60))
 
 
 def main():
