@@ -3,8 +3,6 @@ import json
 from flask import Flask, Response
 from flask_restplus import Resource, Api
 from flask_sqlalchemy import SQLAlchemy
-from flask_restplus import fields
-
 
 # welcome to flask: http://flask.pocoo.org/
 # working with sqlalchemy & swagger:
@@ -161,12 +159,28 @@ class PokemonSpeed(Resource):
         json_format = json.dumps(pokemon_dict)
         return Response(response=json_format, mimetype="application/json", status=200)
 
+#
+# def main():
+#     application.debug = True
+#     application.run()
+#
+#
+# if __name__ == "__main__":
+#     main()
 
-def main():
-    application.debug = True
-    application.run()
+url = "https://na.op.gg/summoner/ajax/renew.json/"
 
+payload = {
+    'summonerId': 47220368,
+}
 
-if __name__ == "__main__":
-    main()
+data = json.dumps(payload)
+
+print(data)
+
+r = requests.post(url, data)
+
+print(r)
+print(r.status_code)
+print(r.text)
 
