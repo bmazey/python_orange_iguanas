@@ -18,8 +18,9 @@ application.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
 db = SQLAlchemy(application)
 
 
+# find pokemon data from their name
 @api.route("/pokemon/<string:pokemon>")                   # Create a URL route to this resource
-class Pokemon(Resource):                               # Create a RESTful resource
+class Pokemon(Resource):                                  # Create a RESTful resource
     def get(self, pokemon):                               # Create GET endpoint
         return data.get(pokemon)
 
